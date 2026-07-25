@@ -1,0 +1,77 @@
+generated: '2026-07-25'
+method: searched
+source: >-
+  https://developer.aviva.co.uk/developer-guide (indexed copy — the live page
+  returns HTTP 403 to unauthenticated requests),
+  https://developer.aviva.co.uk/.well-known/oauth-authorization-server (HTTP 200),
+  https://developer.aviva.co.uk/api/v2/portal (HTTP 200)
+docs: https://developer.aviva.co.uk/developer-guide
+note: >-
+  Derived from no OpenAPI — Aviva publishes no machine-readable specification.
+  This profile separates the two distinct authentication surfaces Aviva runs: the
+  developer PORTAL login, whose metadata is anonymously readable, and the API
+  CONSUMPTION model, which is described in the portal's developer guide but whose
+  authorization server, scopes and token endpoint are not published outside the
+  login wall.
+summary:
+  types: [oauth2]
+  api_key_in: []
+  oauth2_flows: [authorizationCode, clientCredentials]
+  self_serve: false
+  access_model: partner application and approval
+schemes:
+- name: portal-login
+  surface: developer portal (Kong Konnect)
+  type: oauth2
+  flow: authorizationCode
+  pkce: true
+  code_challenge_methods: [S256]
+  issuer: https://developer.aviva.co.uk
+  authorization_endpoint: https://developer.aviva.co.uk/_oauth/authorize
+  token_endpoint: https://developer.aviva.co.uk/api/oauth/token
+  grant_types_supported: [authorization_code]
+  response_types_supported: [code]
+  oidc_backed: true
+  rbac_enforced: true
+  sources:
+  - well-known/aviva-plc-oauth-authorization-server.json
+  - https://developer.aviva.co.uk/api/v2/portal
+  evidence: >-
+    Portal metadata reports oidc_auth_enabled true, rbac_enabled true,
+    basic_auth_enabled false, saml_auth_enabled false, dcr_provider_ids [] —
+    there is no dynamic client registration, so portal accounts are provisioned by
+    Aviva.
+- name: api-consumption
+  surface: Aviva API Gateway (business APIs)
+  type: oauth2
+  flow: clientCredentials
+  bearer: true
+  header: Authorization
+  header_format: Bearer <token>
+  client_credential_fields: [Name, Client_id, Client_secret]
+  authorization_server: not publicly documented
+  token_endpoint: not publicly documented
+  scopes_published: false
+  sources:
+  - https://developer.aviva.co.uk/developer-guide
+  evidence: >-
+    The developer guide states that for OAuth 2.0 compliant APIs a generated
+    OAuth 2.0 token is supplied in the Authorization field as "Bearer token", and
+    that an authenticated portal user can create, edit or delete an OAuth 2.0
+    client by entering Name, Client_id and Client_secret — the client credential
+    is then usable for mock testing of the API. Formal production consumption is
+    requested through the Aviva API Gateway.
+not_documented:
+  api_keys: true
+  mutual_tls: true
+  openid_connect_discovery: true
+  scope_reference: true
+  jwt_claims: true
+onboarding:
+  self_serve_signup: false
+  route: >-
+    Partners discover APIs in the portal catalogue, apply for sandbox access, then
+    make a formal request to consume the API through the Aviva API Gateway; access
+    and production consumption are granted by Aviva on approval.
+  contact: aservices@aviva.com
+  contact_page: https://developer.aviva.co.uk/contact

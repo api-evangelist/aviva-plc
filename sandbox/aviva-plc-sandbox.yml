@@ -1,0 +1,54 @@
+generated: '2026-07-25'
+method: searched
+source: >-
+  https://developer.aviva.co.uk/developer-guide and
+  https://developer.aviva.co.uk/get-started (indexed copy; live pages return
+  HTTP 403 to unauthenticated requests)
+status: gated
+self_serve: false
+note: >-
+  Aviva does run a sandbox, but it is behind the partner login wall. No test
+  credentials, magic values, test policy numbers or fixture data are published
+  publicly, and none are invented here. What is recorded below is the published
+  description of the sandbox journey.
+environments:
+- name: sandbox
+  purpose: >-
+    Access and test APIs in a sandbox environment where partner scenarios can be
+    simulated before requesting production consumption.
+  access: granted by Aviva on partner application through the developer portal
+  base_url: not published
+- name: production
+  purpose: Live consumption through the Aviva API Gateway.
+  access: granted by Aviva on a separate formal consumption request and approval
+  base_url: not published
+mock_testing:
+  available: true
+  requires_authentication: true
+  capabilities:
+  - Review the API specification and schemas in the portal.
+  - Review example request and response headers and bodies.
+  - Run a mock test against the API with given parameters.
+  - Use an OAuth 2.0 client credential created in the portal as the token for mock testing.
+  evidence: >-
+    "As an authenticated user you can review the API spec and schemas, test the API
+    with mock data to review request and response examples… OAuth 2.0
+    configuration allows use of a token as part of mock testing of the API (after a
+    Client credential has been created)." — Aviva API Developer Portal developer
+    guide. "As an unauthenticated user you have limited access to the Developer
+    Portal… but cannot review API specs, test APIs or make a request to formally
+    consume an Aviva API."
+journey:
+- step: Discover
+  detail: Use the portal Catalogue and documentation to find the appropriate APIs.
+- step: Access
+  detail: Access and test the APIs through the sandbox environment, simulating scenarios.
+- step: Consume
+  detail: Make a formal request to consume the API through the Aviva API Gateway.
+test_data:
+  published: false
+  test_cards: []
+  magic_values: []
+  test_clock: false
+  note: No public test values of any kind. Sandbox data is provisioned per partner.
+contact: aservices@aviva.com

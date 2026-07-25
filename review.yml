@@ -161,6 +161,56 @@ findings:
     status: 404
   - url: https://www.aviva.co.uk/.well-known/security.txt
     status: 404
+  - url: https://developer.aviva.co.uk/robots.txt
+    status: 200
+    note: 'Enrichment round 2026-07-25. Real robots.txt: allows all, disallows /login,
+      /login/sso, /logout, /forgot-password, /reset-password, /apps/, /_preview-mode/.
+      Confirms a login/SSO surface exists behind the wall.'
+  - url: https://developer.aviva.co.uk/.well-known/oauth-protected-resource
+    status: 200
+    note: Enrichment round 2026-07-25. Returns the portal SPA HTML shell (identical 2,226-byte
+      Nuxt document), not RFC 9728 metadata. Same for /.well-known/security.txt, /api-catalog
+      and /ai-plugin.json on this host — 200 but not published documents.
+  - url: https://developer.aviva.co.uk/llms.txt
+    status: 403
+  - url: https://www.aviva.com/llms.txt
+    status: 404
+  - url: https://www.aviva.co.uk/llms.txt
+    status: 404
+  - url: https://api.aviva.ie/
+    status: 403
+    note: Enrichment round 2026-07-25. Second gated API host, not previously recorded;
+      blanket Akamai 403 on /, /openapi.json, /swagger.json, /api-docs, /docs, /v1/openapi.json,
+      /health.
+  - url: https://api.aviva.co.uk/
+    status: 403
+    note: 'Enrichment round 2026-07-25. Akamai edge "Access Denied" body with x-reference-error
+      and an errors.edgesuite.net reference; DNS: cert01.uk.aviva.com.ksd.edgekey.net.
+      Same 403 on every spec path probed.'
+  - url: https://status.aviva.co.uk
+    status: 0
+    note: No DNS. https://aviva.statuspage.io redirects to atlassian.com/software/statuspage
+      — Aviva operates no public status page.
+  - url: https://hackerone.com/aviva
+    status: 404
+    note: Enrichment round 2026-07-25. No bug bounty programme; bugcrowd.com/aviva also
+      404, and /security, /responsible-disclosure on both aviva.com and aviva.co.uk return
+      404. No vulnerability disclosure programme found.
+  - url: https://api.github.com/users/aviva
+    status: 200
+    note: 'Enrichment round 2026-07-25. github.com/aviva is an empty personal user account,
+      not Aviva plc; github.com/AvivaUK is a personal account belonging to "Andrew Mayes".
+      aviva-plc, avivainvestors and aviva-canada: 404. Aviva plc operates no GitHub organisation.'
+  - url: https://registry.npmjs.org/-/v1/search?text=aviva
+    status: 200
+    note: Enrichment round 2026-07-25. No first-party Aviva client library on npm (only
+      an unrelated "aviva-ui"), PyPI (aviva, aviva-api, aviva-sdk all 404) or NuGet (only
+      unrelated third-party packages). No SDKs of any kind.
+  - url: https://developer.aviva.co.uk/api/v2/portal
+    status: 200
+    note: 'Enrichment round 2026-07-25 re-probe. Response carries live rate-limit headers:
+      RateLimit-Limit 600 / 10s and X-RateLimit-Limit-Minute 4000, plus a full CSP, Permissions-Policy,
+      HSTS preload and Cross-Origin-Opener/Resource-Policy same-origin. Captured in rate-limits/aviva-plc-rate-limits.yml.'
   acordPosture:
     phrase: no ACORD reference found; UK broker seam is Polaris UK (imarket, PL EDI messages
       and code lists) plus a one-way Acturis claims API

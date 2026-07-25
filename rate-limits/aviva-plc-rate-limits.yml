@@ -1,0 +1,40 @@
+generated: '2026-07-25'
+method: probed
+source: live response headers from https://developer.aviva.co.uk/api/v2/portal (HTTP 200, 2026-07-25)
+scope: >-
+  These limits were observed on the Aviva developer PORTAL's own anonymously
+  readable API (Kong Konnect), which is the only Aviva API surface that answers an
+  unauthenticated request. Aviva publishes NO rate limits for its business
+  (Health / PMI) APIs — those live behind the partner login wall and the Aviva API
+  Gateway. Do not read these numbers as the partner API quota.
+signalling:
+  standard: IETF draft RateLimit header fields, plus Kong's X-RateLimit-* variants
+  headers:
+  - RateLimit-Limit
+  - RateLimit-Remaining
+  - RateLimit-Reset
+  - X-RateLimit-Limit-10
+  - X-RateLimit-Remaining-10
+  - X-RateLimit-Limit-Minute
+  - X-RateLimit-Remaining-Minute
+rate_limits:
+- name: portal-api-10s
+  api: Aviva Developer Portal API
+  host: developer.aviva.co.uk
+  limit_count: 600
+  interval: 10s
+  header: RateLimit-Limit / X-RateLimit-Limit-10
+  observed: '2026-07-25'
+- name: portal-api-minute
+  api: Aviva Developer Portal API
+  host: developer.aviva.co.uk
+  limit_count: 4000
+  interval: 1m
+  header: X-RateLimit-Limit-Minute
+  observed: '2026-07-25'
+business_apis:
+  published: false
+  note: >-
+    No rate-limit, quota, burst or throttling policy is published for the Private
+    Medical Insurance pricing/purchase APIs. Consumption is negotiated through the
+    Aviva API Gateway on partner approval.

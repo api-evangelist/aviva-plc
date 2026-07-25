@@ -93,6 +93,24 @@ apis:
   - type: Documentation
     url: https://developer.aviva.co.uk/documentation
 common:
+- type: DomainSecurity
+  url: security/aviva-plc-domain-security.yml
+- type: Authentication
+  url: authentication/aviva-plc-authentication.yml
+- type: WellKnown
+  url: well-known/aviva-plc-well-known.yml
+- type: Conventions
+  url: conventions/aviva-plc-conventions.yml
+- type: Conformance
+  url: conformance/aviva-plc-conformance.yml
+- type: Lifecycle
+  url: lifecycle/aviva-plc-lifecycle.yml
+- type: Sandbox
+  url: sandbox/aviva-plc-sandbox.yml
+- type: RateLimits
+  url: rate-limits/aviva-plc-rate-limits.yml
+- type: LLMsTxt
+  url: llms/aviva-plc-llms.txt
 - type: Website
   url: https://www.aviva.com/
 - type: Website
@@ -103,10 +121,24 @@ common:
   url: https://developer.aviva.co.uk/documentation
 - type: Documentation
   url: https://developer.aviva.co.uk/developer-guide
+- type: GettingStarted
+  url: https://developer.aviva.co.uk/get-started
+- type: Guides
+  url: https://developer.aviva.co.uk/guides
+- type: About
+  url: https://developer.aviva.co.uk/about
+- type: Support
+  url: https://developer.aviva.co.uk/contact
 - type: Portal
   url: https://connect.avivab2b.co.uk/
 - type: Blog
   url: https://www.aviva.com/newsroom/
+- type: TermsOfService
+  url: https://www.aviva.com/legal/
+- type: PrivacyPolicy
+  url: https://www.aviva.com/privacy-policy/
+- type: Investors
+  url: https://www.aviva.com/investors/
 - type: LinkedIn
   url: https://www.linkedin.com/company/aviva-plc
 maintainers:

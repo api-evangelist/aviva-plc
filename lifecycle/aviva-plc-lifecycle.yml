@@ -1,0 +1,60 @@
+generated: '2026-07-25'
+method: searched
+source: live probes 2026-07-25 of Aviva developer, corporate and status hosts
+note: >-
+  Recorded absences are probe results, not assumptions. Aviva's API lifecycle
+  commitments (versioning, deprecation, SLA) are not published outside the partner
+  login wall; they are presumably contractual with each partner.
+versioning:
+  scheme: uri-path
+  current: null
+  policy_url: null
+  documented: false
+  evidence: >-
+    Only the developer portal's own API shows a version segment (/api/v2/portal).
+    No versioning policy or version identifier is published for the Private
+    Medical Insurance pricing/purchase APIs.
+deprecation:
+  policy_url: null
+  documented: false
+  sunset_header: unknown
+  deprecation_header: unknown
+  evidence: No deprecation or sunset policy (RFC 8594) is published on any Aviva surface.
+sla:
+  url: null
+  uptime_target: null
+  documented: false
+status_page:
+  url: null
+  documented: false
+  probes:
+  - {url: 'https://status.aviva.co.uk', status: 0, note: no DNS}
+  - {url: 'https://status.developer.aviva.co.uk', status: 0, note: no DNS}
+  - {url: 'https://aviva.statuspage.io', status: 200, note: redirects to atlassian.com/software/statuspage — no Aviva status page exists}
+changelog:
+  url: null
+  documented: false
+  note: >-
+    No dated API changelog or release-notes feed is published. Product-level
+    announcements appear in the corporate newsroom
+    (https://www.aviva.com/newsroom/) and in the broker hub
+    (https://connect.avivab2b.co.uk/), neither of which is an API changelog.
+roadmap:
+  url: null
+  documented: false
+deprecated_operations: []
+milestones:
+- date: '2024-12-13'
+  event: >-
+    Aviva and Acturis launch what both parties describe as the first claims API
+    from any insurer integrated with Acturis — a one-way push of new and updated
+    personal and commercial motor, property and liability claim records from
+    Aviva's claims system into a broker's Acturis system, with broker rollout from
+    Q1 2025.
+  source: https://www.acturis.com/blog/2024/12/13/aviva-and-acturis-launch-ground-breaking-broker-api-to-simplify-claims-process/
+- date: '2025-07-01'
+  event: >-
+    Aviva completes its acquisition of Direct Line Insurance Group, taking the
+    group to roughly 20 million UK customers — the material change to the estate
+    these APIs will eventually have to serve.
+  source: https://www.aviva.com/newsroom/news-releases/2025/07/aviva-completes-acquisition-of-direct-line/

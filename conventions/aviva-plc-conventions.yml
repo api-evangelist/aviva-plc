@@ -1,0 +1,84 @@
+generated: '2026-07-25'
+method: searched
+source: >-
+  https://developer.aviva.co.uk/developer-guide and
+  https://developer.aviva.co.uk/about (indexed copy; live pages return HTTP 403),
+  plus live header probes of developer.aviva.co.uk and api.aviva.co.uk
+note: >-
+  Aviva publishes no OpenAPI, so nothing here is derived from a specification.
+  Every entry is either quoted from the portal's own (search-indexed) developer
+  guide or observed on a live response. Fields recorded as documented: false are
+  honest absences — Aviva does not publish that convention outside the login wall;
+  they are NOT assertions that the API lacks the behaviour.
+architecture:
+  style: REST
+  transport: https
+  formats: [application/json]
+  evidence: >-
+    "Aviva's Application Programming Interfaces use Representational State
+    Transfer (REST) architecture." — Aviva API Developer Portal developer guide.
+authentication:
+  style: OAuth 2.0 bearer token
+  header: Authorization
+  format: Bearer <token>
+  client_model: OAuth 2.0 client (Name, Client_id, Client_secret) created in the portal
+  artifact: authentication/aviva-plc-authentication.yml
+  documented: true
+idempotency:
+  documented: false
+  header: null
+  note: >-
+    No idempotency key, retry-safety or duplicate-suppression contract is
+    published on any Aviva surface. Not asserted either way for the gated APIs.
+pagination:
+  documented: false
+  style: null
+filtering_and_expansion:
+  documented: false
+metadata:
+  documented: false
+request_tracing:
+  documented: false
+  observed_headers:
+  - name: x-reference-error
+    host: api.aviva.co.uk
+    note: >-
+      Akamai edge reference id emitted on the blanket 403 (also echoed as an
+      errors.edgesuite.net URL in the body). It is an edge diagnostic, not a
+      documented per-request correlation id contract.
+versioning:
+  scheme: uri-path
+  observed: >-
+    The portal's own API is versioned in the path (/api/v2/portal). No versioning
+    policy is published for the business APIs.
+  documented: false
+error_envelope:
+  documented: false
+  rfc9457: false
+  note: >-
+    No error reference, problem-type registry or error-envelope schema is
+    published. Unauthenticated requests receive infrastructure errors only: a Nuxt
+    "Forbidden" HTML page from the Kong portal and an Akamai "Access Denied" HTML
+    page from api.aviva.co.uk — neither is an application error contract.
+rate_limits:
+  signalled: true
+  artifact: rate-limits/aviva-plc-rate-limits.yml
+  note: >-
+    RateLimit-* and X-RateLimit-* headers are emitted by the developer portal API.
+    No published quota for the business APIs.
+security_transport:
+  hsts: true
+  tls: TLSv1.3
+  artifact: security/aviva-plc-domain-security.yml
+  note: >-
+    developer.aviva.co.uk is served under an Extended Validation certificate issued
+    to "Aviva PLC" (Sectigo Public Server Authentication CA EV R36) and sets
+    Strict-Transport-Security max-age=31536000; includeSubDomains; preload, plus a
+    full CSP, Permissions-Policy, X-Frame-Options SAMEORIGIN and
+    Cross-Origin-Opener/Resource-Policy same-origin.
+cross_links:
+  authentication: authentication/aviva-plc-authentication.yml
+  lifecycle: lifecycle/aviva-plc-lifecycle.yml
+  conformance: conformance/aviva-plc-conformance.yml
+  sandbox: sandbox/aviva-plc-sandbox.yml
+  well_known: well-known/aviva-plc-well-known.yml

@@ -1,0 +1,79 @@
+generated: '2026-07-25'
+method: searched
+source: live probes of the Aviva developer portal and corporate hosts
+note: >-
+  Aviva's developer portal (Kong Konnect) answers several /.well-known/ paths with
+  HTTP 200, but only /.well-known/oauth-authorization-server returns a real
+  document. Every other path returns the portal's single-page-application HTML
+  shell (identical 2,226-byte Nuxt document, <title>Developer Portal</title>) —
+  a catch-all route, not a published discovery document. Those are recorded as
+  status 200 with published: false so a later round does not mistake the shell
+  for a real artifact.
+hosts:
+- host: https://developer.aviva.co.uk
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    published: true
+    standard: RFC 8414
+    file: aviva-plc-oauth-authorization-server.json
+    note: >-
+      Authorization server metadata for the DEVELOPER PORTAL login only (issuer
+      https://developer.aviva.co.uk, authorization_code + PKCE S256). It is not the
+      authorization server that issues tokens for consuming Aviva's business APIs —
+      that one is not publicly documented.
+  - path: /.well-known/openid-configuration
+    status: 200
+    published: false
+    note: Returns the portal SPA HTML shell, not an OIDC discovery document.
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    published: false
+    note: Returns the portal SPA HTML shell (RFC 9728 metadata not published).
+  - path: /.well-known/security.txt
+    status: 200
+    published: false
+    note: Returns the portal SPA HTML shell, not an RFC 9116 security.txt.
+  - path: /.well-known/api-catalog
+    status: 200
+    published: false
+    note: Returns the portal SPA HTML shell; no RFC 9727 API catalog published.
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    published: false
+    note: Returns the portal SPA HTML shell.
+  - path: /robots.txt
+    status: 200
+    published: true
+    note: >-
+      Real robots.txt. Allows all, disallows /login, /login/sso, /logout,
+      /forgot-password, /reset-password, /apps/, /_preview-mode/ and blocks a list
+      of non-helpful crawlers. Confirms the portal exposes a login/SSO surface.
+  - path: /llms.txt
+    status: 403
+    published: false
+- host: https://www.aviva.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    published: false
+  - path: /llms.txt
+    status: 404
+    published: false
+- host: https://www.aviva.co.uk
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    published: false
+  - path: /llms.txt
+    status: 404
+    published: false
+- host: https://api.aviva.co.uk
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+    published: false
+    note: >-
+      Akamai edge returns a blanket "Access Denied" for every path on this host
+      (x-reference-error / errors.edgesuite.net body). No anonymous discovery
+      surface exists.

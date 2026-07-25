@@ -1,0 +1,108 @@
+generated: '2026-07-25'
+method: searched
+source: >-
+  https://developer.aviva.co.uk/.well-known/oauth-authorization-server,
+  https://developer.aviva.co.uk/api/v2/portal,
+  https://developer.aviva.co.uk/developer-guide (indexed),
+  https://www.polaris.co.uk/products/imarket/
+note: >-
+  No OpenAPI exists for this provider, so nothing below is derived from a
+  specification. Each claim is anchored to a live probe or to published provider /
+  standards-body copy. conforms:false means "not evidenced publicly", not "known
+  to be non-conformant".
+standards:
+- id: rest
+  conforms: true
+  evidence: >-
+    Portal developer guide states Aviva's APIs use Representational State Transfer
+    (REST) architecture over HTTPS.
+- id: oauth2
+  conforms: true
+  evidence: >-
+    Portal developer guide documents OAuth 2.0 clients (Client_id / Client_secret)
+    and a Bearer token in the Authorization header for consuming OAuth 2.0
+    compliant Aviva APIs.
+- id: oauth2-authorization-code
+  conforms: true
+  evidence: >-
+    /.well-known/oauth-authorization-server advertises grant_types_supported
+    [authorization_code], response_types_supported [code] for the portal login.
+- id: oauth2-pkce
+  conforms: true
+  evidence: code_challenge_methods_supported [S256] (RFC 7636) on the portal authorization server.
+- id: rfc8414-authorization-server-metadata
+  conforms: true
+  evidence: >-
+    /.well-known/oauth-authorization-server returns a valid RFC 8414 metadata
+    document (HTTP 200) — for the portal login surface only.
+- id: rfc9728-protected-resource-metadata
+  conforms: false
+  evidence: /.well-known/oauth-protected-resource returns the portal SPA shell, not metadata.
+- id: openid-connect
+  conforms: partial
+  evidence: >-
+    Portal metadata reports oidc_auth_enabled true (OIDC-backed portal login), but
+    no OIDC discovery document is published — /.well-known/openid-configuration
+    returns the SPA shell.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: >-
+    No security.txt on www.aviva.com (404), www.aviva.co.uk (404) or
+    developer.aviva.co.uk (SPA shell).
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: No error contract of any kind is published; no application/problem+json observed.
+- id: openapi
+  conforms: false
+  evidence: >-
+    No OpenAPI/Swagger document is retrievable. /openapi.json and /swagger.json on
+    the portal return 403; every path on api.aviva.co.uk and api.aviva.ie returns
+    an Akamai blanket 403; the Kong portal product endpoints return 404
+    unauthenticated; both public sitemaps are empty urlsets.
+- id: asyncapi
+  conforms: false
+  evidence: No event catalogue, webhook reference or AsyncAPI document is published.
+- id: graphql
+  conforms: false
+  evidence: developer.aviva.co.uk/graphql and api.aviva.co.uk/graphql both return 403; nothing documented.
+- id: grpc
+  conforms: false
+  evidence: No .proto published on any Aviva surface or in any public repository.
+- id: acord
+  conforms: false
+  evidence: >-
+    No ACORD, AL3, ACORD XML, ACORD-certified or NGDS reference found on aviva.com,
+    aviva.co.uk, connect.avivab2b.co.uk or the portal's indexed surface. ACORD
+    touches the UK mainly via the London Market / Lloyd's Blueprint Two programme,
+    which Aviva's retail and commercial UK business does not trade through.
+- id: polaris-pl-edi
+  conforms: true
+  evidence: >-
+    Aviva is a named participating insurer on Polaris UK's imarket commercial-lines
+    platform, which carries Polaris code lists and PL EDI messages to broker
+    systems (Acturis, Applied Systems, Bravo Digital Trader, Open GI, SSP). The
+    standards themselves sit behind Polaris membership.
+  standard_body: Polaris UK Ltd
+  url: https://www.polaris.co.uk/products/imarket/
+- id: hsts
+  conforms: true
+  evidence: >-
+    Strict-Transport-Security max-age=31536000 on www.aviva.com, www.aviva.co.uk,
+    connect.avivab2b.co.uk and developer.aviva.co.uk (the last with
+    includeSubDomains; preload).
+- id: dmarc
+  conforms: true
+  evidence: aviva.com and aviva.co.uk both publish DMARC with policy reject (see security/aviva-plc-domain-security.yml).
+- id: dnssec
+  conforms: true
+  evidence: DNSSEC signed for both aviva.com and aviva.co.uk.
+compliance_program:
+  published: false
+  note: >-
+    No public trust centre, certification page or SOC 2 / ISO 27001 attestation
+    page was found on any Aviva domain (trust.aviva.com, security.aviva.com,
+    /trust, /security, /compliance all miss). Aviva describes ISO 27001 and
+    SOC1/SOC2 only as requirements it places on its own third-party suppliers, and
+    a 2009 news release records ISO 27001 accreditation for the former Hibernian
+    Aviva Health business in Ireland — neither is a current published compliance
+    programme for the API surface, so no Compliance pointer is emitted.
