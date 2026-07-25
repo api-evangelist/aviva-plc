@@ -1,0 +1,305 @@
+aid: aviva-plc
+name: Aviva plc
+review:
+  question: Does Aviva plc expose a real, self-serve public API surface, and what is its
+    insurance data-standards posture?
+  answer: false
+  date: '2026-07-25'
+  reviewer: API Evangelist
+  homeMarket: United Kingdom
+  tier: carrier-pc
+  gated: true
+  status: built-stub
+findings:
+  summary: |
+    Aviva plc runs a genuine, modern API programme — and none of it is publicly
+    consumable. A first-party developer portal exists at
+    https://developer.aviva.co.uk, served under an Extended Validation
+    certificate issued to "Aviva PLC" (Sectigo EV R36) and built on Kong
+    Konnect (canonical domain bbb87a0dba4d.edge.eu.portal.konghq.com). The
+    portal's own unauthenticated metadata endpoint, GET /api/v2/portal, returns
+    HTTP 200 and reports "is_public": false, "rbac_enabled": true,
+    "oidc_auth_enabled": true, "basic_auth_enabled": false,
+    "saml_auth_enabled": false, "dcr_provider_ids": []. Every human content
+    path — /, /documentation, /developer-guide, /about, /health, /get-started,
+    /guides, /api-details/*, /login, /register — returns HTTP 403. The 403 is
+    blanket (a deliberately bogus path such as /this-does-not-exist-xyz123 also
+    returns 403), so no path-existence inference can be drawn from it. The
+    portal's sitemap index resolves (/sitemap_index.xml -> /__sitemap__/pages.xml
+    and /__sitemap__/apis.xml, both HTTP 200) but BOTH sitemaps are EMPTY
+    urlsets — Aviva publishes zero pages and zero APIs to public indexing.
+    Verdict: this is a partner/agent login wall, not a self-serve developer
+    portal. No specification of any kind could be harvested.
+
+    The API family behind the wall is Aviva's Health business. Search-engine
+    indexed page titles from the portal's own service catalogue name
+    "Private Medical Insurance Consumer Pricing" (/api-details/details-pricing)
+    and "Private Medical Insurance Consumer Purchase" (/api-details/details-purchase),
+    with portal copy describing premium calculation for consumer and SME PMI and
+    an enrolment API that lets partners submit PMI applications into Aviva
+    systems to "automate the complete journey from quote to buy". Those two
+    entries are recorded in apis.yml on indexed-title provenance only; they were
+    NOT retrieved (403). The SME pricing and enrolment APIs are described in
+    portal copy but no stable URL was confirmed for them, so they are not
+    listed as apis[] entries.
+
+    The larger and more consequential integration channel is not the portal.
+    In the UK, Aviva trades with brokers through Polaris UK Ltd's imarket
+    commercial-lines platform — Aviva is named among the participating insurers
+    alongside Allianz, Arch, AXA, Intact, QBE and Zurich — reaching broker
+    management systems Acturis, Applied Systems, Bravo Digital Trader, Open GI
+    and SSP, over Polaris's own code lists and PL EDI message standards. In
+    December 2024 Aviva and Acturis launched what both parties describe as the
+    first claims API from any insurer integrated with Acturis: a one-way
+    transfer of new and updated personal and commercial motor, property and
+    liability claim records from Aviva's claims system into a broker's Acturis
+    system, with broker rollout from Q1 2025. That surface is delivered through
+    the software house, not to developers.
+  developerPortal:
+    url: https://developer.aviva.co.uk/
+    httpStatus: 403
+    classification: partner login wall
+    isRealSelfServePortal: false
+    platform: Kong Konnect Developer Portal
+    canonicalDomain: bbb87a0dba4d.edge.eu.portal.konghq.com
+    portalId: 37b90d24-c2c3-4406-a468-448da394e5a1
+    orgId: 44f41d60-06a5-49d3-8dbf-34aee696502d
+    isPublic: false
+    rbacEnabled: true
+    tlsNote: >-
+      Server does not send the intermediate certificate; chain verification fails
+      with "unable to verify the first certificate". Leaf subject is
+      O=Aviva PLC, CN=developer.aviva.co.uk, issuer Sectigo Public Server
+      Authentication CA EV R36.
+  probes:
+  - url: https://developer.aviva.co.uk
+    status: 403
+    note: Kong Konnect portal shell; all content gated.
+  - url: https://developer.aviva.co.uk/api/v2/portal
+    status: 200
+    note: Unauthenticated portal metadata; is_public false, rbac_enabled true, oidc_auth_enabled
+      true.
+  - url: https://developer.aviva.co.uk/api/v2/portal/appearance
+    status: 200
+    note: Theme/branding JSON only. No API catalogue data.
+  - url: https://developer.aviva.co.uk/.well-known/oauth-authorization-server
+    status: 200
+    note: Portal developer login only — issuer https://developer.aviva.co.uk, authorization_endpoint
+      /_oauth/authorize, token_endpoint /api/oauth/token, grant_types_supported [authorization_code],
+      code_challenge_methods_supported [S256]. Not an API-consumption authorization server.
+  - url: https://developer.aviva.co.uk/.well-known/openid-configuration
+    status: 200
+    note: Returns the portal SPA HTML shell, not an OIDC discovery document. No OIDC
+      metadata published.
+  - url: https://developer.aviva.co.uk/__sitemap__/apis.xml
+    status: 200
+    note: Empty urlset — zero APIs published to public indexing.
+  - url: https://developer.aviva.co.uk/__sitemap__/pages.xml
+    status: 200
+    note: Empty urlset — zero pages published to public indexing.
+  - url: https://developer.aviva.co.uk/openapi.json
+    status: 403
+  - url: https://developer.aviva.co.uk/swagger.json
+    status: 403
+  - url: https://developer.aviva.co.uk/api/v2/portal/products
+    status: 404
+  - url: https://developer.aviva.co.uk/api/v2/portal/product-versions
+    status: 404
+  - url: https://developer.aviva.co.uk/graphql
+    status: 403
+  - url: https://api.aviva.co.uk/
+    status: 403
+    note: Resolves and is fronted, but returns 403 with no public documentation.
+  - url: https://broker.aviva.co.uk
+    status: 200
+    note: Broker portal — human login surface, not an API surface.
+  - url: https://connect.avivab2b.co.uk/
+    status: 200
+    note: Aviva B2B broker content hub; carries the Acturis claims API announcements.
+  - url: https://developer.aviva.com
+    status: 0
+    note: No DNS / no connection.
+  - url: https://developers.aviva.com
+    status: 0
+    note: No DNS / no connection.
+  - url: https://docs.aviva.com
+    status: 0
+    note: No DNS / no connection.
+  - url: https://api.aviva.com
+    status: 0
+    note: No DNS / no connection.
+  - url: https://www.aviva.com/developers
+    status: 404
+  - url: https://www.aviva.com/api
+    status: 404
+  - url: https://www.aviva.com/developer
+    status: 404
+  - url: https://www.aviva.com/partners
+    status: 404
+  - url: https://www.aviva.com/integrations
+    status: 404
+  - url: https://www.aviva.co.uk/developers
+    status: 404
+  - url: https://www.aviva.co.uk/api
+    status: 404
+  - url: https://developers.aviva.co.uk
+    status: 0
+    note: No DNS / no connection.
+  - url: https://docs.aviva.co.uk
+    status: 0
+    note: No DNS / no connection.
+  - url: https://developer.avivacanada.com
+    status: 0
+    note: No DNS / no connection.
+  - url: https://api.avivacanada.com
+    status: 0
+    note: No DNS / no connection.
+  - url: https://developer.aviva.ie
+    status: 0
+    note: No DNS / no connection.
+  - url: https://www.aviva.com/.well-known/security.txt
+    status: 404
+  - url: https://www.aviva.co.uk/.well-known/security.txt
+    status: 404
+  acordPosture:
+    phrase: no ACORD reference found; UK broker seam is Polaris UK (imarket, PL EDI messages
+      and code lists) plus a one-way Acturis claims API
+    acordReferenceFound: false
+    searchedFor:
+    - ACORD
+    - AL3
+    - ACORD XML
+    - ACORD certified
+    - NGDS
+    note: >-
+      No ACORD, AL3, ACORD XML, ACORD-certified or NGDS reference was found on
+      aviva.com, aviva.co.uk, connect.avivab2b.co.uk or the gated developer
+      portal's indexed surface. This is the expected UK pattern: the UK's
+      carrier-to-broker data standard is Polaris UK's, not ACORD's. Aviva is a
+      named participating insurer on Polaris imarket, which reaches Acturis,
+      Applied Systems, Bravo Digital Trader, Open GI and SSP and publishes
+      industry code lists and PL EDI messages through the Polaris Online
+      Database. ACORD is relevant to the UK only via the London Market / Lloyd's
+      Blueprint Two programme (EBOT/ECOT on ACORD 2016-10), which is a
+      syndicate-and-broker programme Aviva's retail and commercial UK business
+      does not trade through.
+  insuranceVerbs:
+    quote:
+      exposed: true
+      audience: partner-only
+      note: PMI Consumer Pricing and PMI SME Pricing APIs named in the gated portal catalogue.
+    bind:
+      exposed: true
+      audience: partner-only
+      note: PMI Consumer Purchase / PMI enrolment API described as automating quote-to-buy
+        into Aviva systems.
+    issue:
+      exposed: true
+      audience: partner-only
+      note: Same enrolment API — PMI policy enrolment into Aviva systems, 24/7.
+    fnol:
+      exposed: false
+      audience: partner-only
+      note: >-
+        No first notification of loss API is exposed. The Aviva/Acturis claims
+        API launched December 2024 is explicitly ONE-WAY — it pushes new and
+        updated claim records out of Aviva into the broker's Acturis system. It
+        does not accept a loss notification in, and it is delivered through the
+        software house rather than through the developer portal.
+  authModel:
+    portalLogin: OAuth 2.0 authorization_code with PKCE (S256), OIDC-backed, RBAC-enforced
+    apiConsumption: not publicly documented — access and production consumption granted
+      by Aviva on partner application
+    apiKeyDocumented: false
+    mtlsDocumented: false
+    samlToPortal: false
+  specifications:
+    openapiHarvested: false
+    specsCount: 0
+    note: No OpenAPI, Swagger, AsyncAPI, GraphQL SDL or .proto artifact is retrievable.
+      /openapi.json and /swagger.json return 403; the Kong portal product endpoints
+      return 404 unauthenticated; both public sitemaps are empty.
+  webhooks:
+    documented: false
+    asyncapi: false
+    note: No event catalogue, webhook reference or AsyncAPI document is published. The
+      only event-shaped flow found is the one-way Acturis claims push, which is a
+      software-house integration and is not documented publicly.
+  postman:
+    officialWorkspace: false
+    note: Postman public search returns only unrelated third-party personal collections
+      named "Aviva" in unverified "My Workspace" workspaces. No verified Aviva-published
+      workspace or collection exists.
+  graphql:
+    documented: false
+    note: developer.aviva.co.uk/graphql and api.aviva.co.uk/graphql both return 403 with
+      no documentation; www.aviva.co.uk/graphql 301-redirects. Nothing introspectable
+      or documented.
+  transports:
+  - protocol: REST
+    scheme: https
+    documented: false
+    note: REST APIs exist behind the partner portal but no base URL or endpoint is documented
+      publicly.
+  - protocol: EDI
+    scheme: polaris-imarket
+    documented: false
+    note: Polaris UK PL EDI messages and code lists via imarket to Acturis, Applied Systems,
+      Bravo Digital Trader, Open GI and SSP. Standards are behind Polaris membership.
+  - protocol: WebSocket
+    scheme: wss
+    documented: false
+  - protocol: GraphQL
+    documented: false
+  - protocol: gRPC
+    documented: false
+sources:
+- url: https://developer.aviva.co.uk/api/v2/portal
+  type: APIReference
+  note: Fetched 2026-07-25, HTTP 200. Authoritative machine evidence that the portal is
+    private (is_public false) with RBAC and OIDC enabled.
+- url: https://developer.aviva.co.uk/documentation
+  type: Documentation
+  note: Fetched 2026-07-25, HTTP 403. Titled "Aviva API Developer Portal - Service Catalogue"
+    in search indexes; content not retrievable.
+- url: https://developer.aviva.co.uk/health
+  type: Documentation
+  note: Fetched 2026-07-25, HTTP 403. Health API section of the catalogue.
+- url: https://developer.aviva.co.uk/api-details/details-pricing
+  type: Documentation
+  note: HTTP 403. Indexed title "Aviva Developer Portal - API Details - Private Medical
+    Insurance Consumer Pricing". Name recorded on indexed-title provenance only.
+- url: https://developer.aviva.co.uk/api-details/details-purchase
+  type: Documentation
+  note: HTTP 403. Indexed title "Aviva Developer Portal - API Details - Private Medical
+    Insurance Consumer Purchase". Name recorded on indexed-title provenance only.
+- url: https://www.polaris.co.uk/products/imarket/
+  type: Documentation
+  note: Fetched 2026-07-25. Aviva named among imarket participating insurers; lists Acturis,
+    Applied Systems, Bravo Digital Trader, Open GI and SSP as connected broker systems.
+- url: https://www.acturis.com/blog/2024/12/13/aviva-and-acturis-launch-ground-breaking-broker-api-to-simplify-claims-process/
+  type: Blog
+  note: Aviva/Acturis broker claims API, December 2024 — one-way transfer of motor, property
+    and liability claim records into Acturis.
+- url: https://connect.avivab2b.co.uk/broker/articles/news/new-api-simplifying-the-claims-process-for-acturis-brokers/
+  type: Blog
+  note: Aviva's own broker-facing announcement of the Acturis claims API.
+- url: https://www.aviva.com/newsroom/news-releases/2025/07/aviva-completes-acquisition-of-direct-line/
+  type: PressRelease
+  note: Direct Line acquisition completed 1 July 2025, taking Aviva to c.20 million UK
+    customers.
+actions:
+  openapiDirectoryCreated: false
+  apisYmlCreated: true
+  reason: |
+    Recorded as an honest stub. Aviva plc operates a real Kong Konnect developer
+    portal under its own EV certificate, but it is private by configuration
+    (is_public false, RBAC enabled, OIDC required), returns 403 on every content
+    path, and publishes empty public sitemaps. Zero machine-readable artifacts
+    were retrievable, so no openapi/ directory was created. Two apis[] entries
+    were recorded from the portal's own indexed catalogue page titles and
+    flagged partner-gated; the SME pricing and enrolment APIs described in
+    portal copy were omitted for lack of a confirmed URL. No ACORD reference
+    exists anywhere on Aviva's surfaces — the UK carrier-to-broker seam is
+    Polaris UK's imarket and PL EDI standards, plus the one-way Acturis claims
+    API, neither of which is developer-addressable.

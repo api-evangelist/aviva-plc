@@ -1,0 +1,114 @@
+aid: aviva-plc
+url: https://raw.githubusercontent.com/api-evangelist/aviva-plc/refs/heads/main/apis.yml
+name: Aviva plc
+kind: company
+description: >-
+  Aviva plc is the United Kingdom's largest insurer and one of the ten biggest
+  insurance groups in Europe, listed on the London Stock Exchange and serving
+  roughly 20 million UK customers across the UK, Ireland and Canada following
+  completion of its acquisition of Direct Line Insurance Group on 1 July 2025.
+  Aviva is a composite carrier rather than a single-line one: UK and Ireland
+  general insurance (personal and commercial motor, property and liability),
+  the UK's largest life insurance book, a growing corporate and individual
+  health business, workplace pensions and wealth, and Aviva Investors as the
+  asset-management arm. Aviva Canada is that market's second-largest property
+  and casualty insurer. Aviva's API posture is that of a carrier, not a
+  platform. It operates a real, modern developer portal at
+  developer.aviva.co.uk — a Kong Konnect portal fronted by Aviva's own EV
+  certificate — but the portal reports is_public false with RBAC and OIDC
+  authentication enabled, and every content path returns HTTP 403 to an
+  unauthenticated request. It is explicitly a partner surface: the portal's own
+  copy describes Partners discovering, accessing and consuming Aviva Health
+  APIs, with sandbox access granted on application and production consumption
+  granted on approval. There is no self-serve signup, no public API reference,
+  no downloadable OpenAPI, no public Postman workspace, no GraphQL surface and
+  no published event catalogue. The far larger integration channel is not the
+  portal at all: in the UK, Aviva trades with brokers through Polaris UK's
+  imarket and its PL EDI message and code-list standards, reaching broker
+  systems such as Acturis, Applied Systems, Open GI, Bravo and SSP, and in
+  December 2024 Aviva became the first insurer to launch a claims API
+  integrated directly into Acturis, pushing new and updated motor, property and
+  liability claim records into brokers' management systems. No ACORD reference
+  was found on any Aviva surface; the UK's standards seam here is Polaris, not
+  ACORD. This record is therefore an honest stub: a real but partner-gated API
+  programme with no public self-serve surface to harvest.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Insurance
+- United Kingdom
+- Property and Casualty
+- Life Insurance
+- Health Insurance
+- Claims
+- Underwriting
+- Broker
+- Workplace Pensions
+- Carrier
+created: '2026-07-25'
+modified: '2026-07-25'
+specificationVersion: '0.19'
+apis:
+- aid: aviva-plc:aviva-private-medical-insurance-consumer-pricing-api
+  name: Aviva Private Medical Insurance Consumer Pricing API
+  description: >-
+    Listed in the Aviva API Developer Portal service catalogue as an API that
+    calculates premiums for Aviva consumer Private Medical Insurance policies —
+    the quote/rating verb of the Aviva Health API family. Access is
+    partner-gated: the portal requires OIDC login, partners apply for sandbox
+    access and then apply again to consume in production. The API detail page
+    returns HTTP 403 to unauthenticated requests, and no OpenAPI, base URL or
+    endpoint list is published outside the login wall.
+  humanURL: https://developer.aviva.co.uk/api-details/details-pricing
+  tags:
+  - Health Insurance
+  - Private Medical Insurance
+  - Quote
+  - Rating
+  - Partner Gated
+  properties:
+  - type: DeveloperPortal
+    url: https://developer.aviva.co.uk/
+  - type: Documentation
+    url: https://developer.aviva.co.uk/documentation
+- aid: aviva-plc:aviva-private-medical-insurance-consumer-purchase-api
+  name: Aviva Private Medical Insurance Consumer Purchase API
+  description: >-
+    Listed in the Aviva API Developer Portal service catalogue as the purchase
+    counterpart to the pricing API, enabling partners to submit applications for
+    PMI policy enrolment into Aviva systems and automate the quote-to-buy
+    journey — the bind/issue verbs of the Aviva Health API family. Access is
+    partner-gated behind the portal's OIDC login and an approval workflow; the
+    API detail page returns HTTP 403 to unauthenticated requests and no OpenAPI,
+    base URL or endpoint list is published publicly.
+  humanURL: https://developer.aviva.co.uk/api-details/details-purchase
+  tags:
+  - Health Insurance
+  - Private Medical Insurance
+  - Bind
+  - Policy Issue
+  - Partner Gated
+  properties:
+  - type: DeveloperPortal
+    url: https://developer.aviva.co.uk/
+  - type: Documentation
+    url: https://developer.aviva.co.uk/documentation
+common:
+- type: Website
+  url: https://www.aviva.com/
+- type: Website
+  url: https://www.aviva.co.uk/
+- type: DeveloperPortal
+  url: https://developer.aviva.co.uk/
+- type: Documentation
+  url: https://developer.aviva.co.uk/documentation
+- type: Documentation
+  url: https://developer.aviva.co.uk/developer-guide
+- type: Portal
+  url: https://connect.avivab2b.co.uk/
+- type: Blog
+  url: https://www.aviva.com/newsroom/
+- type: LinkedIn
+  url: https://www.linkedin.com/company/aviva-plc
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
