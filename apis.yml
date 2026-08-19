@@ -46,7 +46,7 @@ tags:
 - Carrier
 created: '2026-07-25'
 modified: '2026-07-25'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: aviva-plc:aviva-private-medical-insurance-consumer-pricing-api
   name: Aviva Private Medical Insurance Consumer Pricing API
