@@ -41,6 +41,17 @@ tags:
 - Health Insurance
 - Claims
 - Underwriting
+- Brokers
+- Workplace Pensions
+- Carrier
+tags_raw:
+- Insurance
+- United Kingdom
+- Property and Casualty
+- Life Insurance
+- Health Insurance
+- Claims
+- Underwriting
 - Broker
 - Workplace Pensions
 - Carrier
@@ -60,6 +71,12 @@ apis:
     endpoint list is published outside the login wall.
   humanURL: https://developer.aviva.co.uk/api-details/details-pricing
   tags:
+  - Health Insurance
+  - Private Medical Insurance
+  - Quotes
+  - Rating
+  - Partner Gated
+  tags_raw:
   - Health Insurance
   - Private Medical Insurance
   - Quote
