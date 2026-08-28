@@ -32,6 +32,17 @@ description: >-
   was found on any Aviva surface; the UK's standards seam here is Polaris, not
   ACORD. This record is therefore an honest stub: a real but partner-gated API
   programme with no public self-serve surface to harvest.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
 - Insurance
