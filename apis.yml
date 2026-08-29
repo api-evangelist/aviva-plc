@@ -1,5 +1,8 @@
 aid: aviva-plc
 url: https://raw.githubusercontent.com/api-evangelist/aviva-plc/refs/heads/main/apis.yml
+x-api-posture: docs-gated
+x-api-posture-basis: observed
+x-api-posture-note: "There is no self-serve signup, no public API reference, no downloadable OpenAPI, no public Postman workspace, no GraphQL surface and no published event catalogue."
 name: Aviva plc
 kind: company
 description: >-
