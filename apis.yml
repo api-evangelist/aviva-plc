@@ -3,7 +3,7 @@ url: https://raw.githubusercontent.com/api-evangelist/aviva-plc/refs/heads/main/
 x-api-posture: docs-gated
 x-api-posture-basis: observed
 x-api-posture-note: "There is no self-serve signup, no public API reference, no downloadable OpenAPI, no public Postman workspace, no GraphQL surface and no published event catalogue."
-name: Aviva plc
+name: Aviva
 kind: company
 description: >-
   Aviva plc is the United Kingdom's largest insurer and one of the ten biggest
@@ -70,7 +70,6 @@ tags:
 - Health Insurance
 - Claims
 - Underwriting
-- Brokers
 - Workplace Pensions
 - Carrier
 tags_raw:
@@ -81,7 +80,6 @@ tags_raw:
 - Health Insurance
 - Claims
 - Underwriting
-- Broker
 - Workplace Pensions
 - Carrier
 created: '2026-07-25'
@@ -190,3 +188,6 @@ common:
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+x-legal-name: Aviva plc
+x-tags-removed:
+- Brokers
