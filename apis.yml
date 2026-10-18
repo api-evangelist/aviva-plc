@@ -102,7 +102,6 @@ apis:
   - Private Medical Insurance
   - Quotes
   - Ratings
-  - Partner Gated
   tags_raw:
   - Health Insurance
   - Private Medical Insurance
@@ -126,6 +125,11 @@ apis:
     base URL or endpoint list is published publicly.
   humanURL: https://developer.aviva.co.uk/api-details/details-purchase
   tags:
+  - Health Insurance
+  - Private Medical Insurance
+  - Bind
+  - Policy Issue
+  tags_raw:
   - Health Insurance
   - Private Medical Insurance
   - Bind
