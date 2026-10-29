@@ -1,4 +1,4 @@
-# Aviva plc (aviva-plc)
+# Aviva
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,69 +64,97 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Aviva plc is the United Kingdom's largest insurer and one of the ten biggest insurance groups in Europe, listed on the London Stock Exchange and serving roughly 20 million UK customers across the UK, Ireland and Canada following completion of its acquisition of Direct Line Insurance Group on 1 July 2025. Aviva is a composite carrier: UK and Ireland general insurance (personal and commercial motor, property and liability), the UK's largest life insurance book, a growing corporate and individual health business, workplace pensions and wealth, and Aviva Investors as the asset-management arm. Aviva Canada is that market's second-largest property and casualty insurer.
+Aviva plc is the United Kingdom's largest insurer and one of the ten biggest insurance groups in Europe, listed on the London Stock Exchange and serving roughly 20 million UK customers across the UK, Ireland and Canada following completion of its acquisition of Direct Line Insurance Group on 1 July 2025. Aviva is a composite carrier rather than a single-line one: UK and Ireland general insurance (personal and commercial motor, property and liability), the UK's largest life insurance book, a growing corporate and individual health business, workplace pensions and wealth, and Aviva Investors as the asset-management arm. Aviva Canada is that market's second-largest property and casualty insurer. Aviva's API posture is that of a carrier, not a platform. It operates a real, modern developer portal at developer.aviva.co.uk — a Kong Konnect portal fronted by Aviva's own EV certificate — but the portal reports is_public false with RBAC and OIDC authentication enabled, and every content path returns HTTP 403 to an unauthenticated request. It is explicitly a partner surface: the portal's own copy describes Partners discovering, accessing and consuming Aviva Health APIs, with sandbox access granted on application and production consumption granted on approval. There is no self-serve signup, no public API reference, no downloadable OpenAPI, no public Postman workspace, no GraphQL surface and no published event catalogue. The far larger integration channel is not the portal at all: in the UK, Aviva trades with brokers through Polaris UK's imarket and its PL EDI message and code-list standards, reaching broker systems such as Acturis, Applied Systems, Open GI, Bravo and SSP, and in December 2024 Aviva became the first insurer to launch a claims API integrated directly into Acturis, pushing new and updated motor, property and liability claim records into brokers' management systems. No ACORD reference was found on any Aviva surface; the UK's standards seam here is Polaris, not ACORD. This record is therefore an honest stub: a real but partner-gated API programme with no public self-serve surface to harvest.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/aviva-plc/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/aviva-plc/refs/heads/main/apis.yml)
+**Areas:** Insurance · United Kingdom · Property and Casualty · Life Insurance · Health Insurance · Claims · Underwriting · Workplace Pensions · Carrier
 
-## API Posture
+## Aviva on APIs.io
 
-Aviva runs a real API programme that is **not publicly consumable**. A first-party developer portal exists at [developer.aviva.co.uk](https://developer.aviva.co.uk/), served under an Extended Validation certificate issued to Aviva PLC and built on Kong Konnect. Its own unauthenticated metadata endpoint (`GET /api/v2/portal`, HTTP 200) reports `is_public: false`, `rbac_enabled: true` and `oidc_auth_enabled: true`. Every content path — `/documentation`, `/developer-guide`, `/health`, `/api-details/*` — returns **HTTP 403**, and both public sitemaps (`/__sitemap__/pages.xml`, `/__sitemap__/apis.xml`) are empty. It is a partner login wall, not a self-serve developer portal.
+Everything profiled for Aviva is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/aviva-plc/](https://apis.io/providers/aviva-plc/)** — or go straight to one of the APIs or properties below.
 
-Behind the wall sits Aviva's Health API family — Private Medical Insurance pricing (quote/rating) and purchase/enrolment (bind/issue) for consumer and SME. Partners apply for sandbox access and apply again for production consumption. **No OpenAPI, Swagger, AsyncAPI, GraphQL SDL, `.proto` or official Postman workspace is published**, so no specification could be harvested. There is no documented FNOL API.
+### APIs (2)
 
-The larger integration channel is not the portal at all. In the UK, Aviva trades with brokers through **Polaris UK's imarket** — Aviva is a named participating insurer — over Polaris code lists and PL EDI messages, reaching Acturis, Applied Systems, Bravo Digital Trader, Open GI and SSP. In December 2024 Aviva and Acturis launched what both describe as the first insurer claims API integrated into Acturis: a **one-way** push of new and updated motor, property and liability claim records into a broker's Acturis system.
+- [Aviva Private Medical Insurance Consumer Pricing API](https://apis.io/apis/aviva-plc/aviva-private-medical-insurance-consumer-pricing-api/) — Listed in the Aviva API Developer Portal service catalogue as an API that calculates premiums for Aviva consumer Private Medical Insurance policies — the…
+- [Aviva Private Medical Insurance Consumer Purchase API](https://apis.io/apis/aviva-plc/aviva-private-medical-insurance-consumer-purchase-api/) — Listed in the Aviva API Developer Portal service catalogue as the purchase counterpart to the pricing API, enabling partners to submit applications for PMI…
 
-**ACORD posture:** no ACORD reference found. No ACORD, AL3, ACORD XML, ACORD-certified or NGDS mention appears on any Aviva surface. That is the expected UK pattern — the UK carrier-to-broker standard is Polaris, not ACORD; ACORD reaches the UK mainly through Lloyd's Blueprint Two (EBOT/ECOT on ACORD 2016-10), a London Market programme Aviva's UK retail and commercial business does not trade through.
+### Published properties
 
-## Tags
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-- Insurance
-- United Kingdom
-- Property and Casualty
-- Life Insurance
-- Health Insurance
-- Claims
-- Underwriting
-- Broker
-- Workplace Pensions
-- Carrier
+#### Security (2)
 
-## Timestamps
+Authentication, trust centre, and vulnerability disclosure.
 
-- **Created:** 2026-07-25
-- **Modified:** 2026-07-25
+- [Aviva Plc Authentication](https://apis.io/security/aviva-plc/aviva-plc-authentication/)
+- [Aviva Plc Domain Security](https://apis.io/security/aviva-plc/aviva-plc-domain-security/)
 
-## APIs
+#### Rate limits (1)
 
-Recorded from the developer portal's own indexed service-catalogue page titles. Both are partner-gated and returned HTTP 403 to unauthenticated requests; no base URL or specification is published.
+Published request limits.
 
-### Aviva Private Medical Insurance Consumer Pricing API
+- [Aviva Plc Rate Limits](https://apis.io/rate-limits/aviva-plc/aviva-plc-rate-limits/)
 
-Calculates premiums for Aviva consumer Private Medical Insurance policies — the quote/rating verb of the Aviva Health API family.
+## Where to find this API
 
-- **Human URL:** [https://developer.aviva.co.uk/api-details/details-pricing](https://developer.aviva.co.uk/api-details/details-pricing)
-
-#### Properties
-
-- [Developer Portal](https://developer.aviva.co.uk/)
-- [Documentation](https://developer.aviva.co.uk/documentation)
-
-### Aviva Private Medical Insurance Consumer Purchase API
-
-Submits applications for PMI policy enrolment into Aviva systems, automating the quote-to-buy journey — the bind/issue verbs of the Aviva Health API family.
-
-- **Human URL:** [https://developer.aviva.co.uk/api-details/details-purchase](https://developer.aviva.co.uk/api-details/details-purchase)
-
-#### Properties
-
-- [Developer Portal](https://developer.aviva.co.uk/)
-- [Documentation](https://developer.aviva.co.uk/documentation)
-
-## Links
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.aviva.com/)
-- [Aviva UK](https://www.aviva.co.uk/)
-- [Developer Portal](https://developer.aviva.co.uk/) — partner-gated
-- [Aviva Broker Connect (B2B)](https://connect.avivab2b.co.uk/)
-- [Newsroom](https://www.aviva.com/newsroom/)
-- [LinkedIn](https://www.linkedin.com/company/aviva-plc)
+- [Documentation](https://developer.aviva.co.uk/documentation)
+- [Getting started](https://developer.aviva.co.uk/get-started)
+- [Support](https://developer.aviva.co.uk/contact)
+- [Blog](https://www.aviva.com/newsroom/)
+- [Terms of service](https://www.aviva.com/legal/)
+- [Privacy policy](https://www.aviva.com/privacy-policy/)
+
+## API Evangelist rating
+
+**Kin Score 24.2** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 64.3 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 21.1 |
+| Developer ergonomics | 39.3 |
+| Access clarity | 21.1 |
+
+**Agent readiness 13.3** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 21.9** — Insurance
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/aviva-plc/](https://apis.io/providers/aviva-plc/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Aviva: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/aviva-plc/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
